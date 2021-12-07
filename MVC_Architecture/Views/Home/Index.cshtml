@@ -1,0 +1,58 @@
+﻿@using MVC_Architecture.Models
+@{
+    Layout = "_Layout";
+}
+@model  List<Post>
+
+
+<main class="container  mt-3">
+    <h3 class="text-center">All blogs</h3>
+    <hr />
+
+    <div class="custom-cards">
+
+        <div class="card m-1 d-inline" style="width: 27%;">
+            <img src="~/Images/photo_2021-11-27_00-43-16.jpg" class="card-img-top" style="height: 15rem;"
+                 asp-append-version="true" alt="logo" />
+            <div class="card-body custom-card">
+                <h5 class="card-title">First Post</h5>
+                <p class="card-text"><small class="text-muted">25.11.2021 11.11 PM</small></p>
+                <p class="card-text">Lorem ipsum dolor, sondae voluptatem perspiciatis.</p>
+                <a asp-action="viewpost" class="btn btn-primary">
+                    <i class="las la-angle-double-right"></i>Read
+                    More
+                </a>
+            </div>
+        </div>
+
+        <div class="card m-1 d-inline" style="width: 27%;">
+            <img src="~/Images/photo_2021-11-27_00-43-32.jpg" class="card-img-top" style="height: 15rem;"
+                 asp-append-version="true" alt="logo" />
+            <div class="card-body custom-card">
+                <h5 class="card-title">First Post</h5>
+                <p class="card-text"><small class="text-muted">25.11.2021 11.11 PM</small></p>
+                <p class="card-text">Lorem ipsum dolor, sondae voluptatem perspiciatis.</p>
+                <a asp-controller="home" asp-action="viewpost" class="btn btn-primary">
+                    <i class="las la-angle-double-right"></i>Read
+                    More
+                </a>
+            </div>
+        </div>
+
+        <div class="card m-1 d-inline" style="width: 27%;">
+            <img src="~/Images/photo_2021-11-27_00-43-32.jpg" class="card-img-top" style="height: 15rem;"
+                 asp-append-version="true" alt="logo" />
+            <div class="card-body custom-card">
+                <h5 class="card-title">First Post</h5>
+                <p class="card-text"><small class="text-muted">25.11.2021 11.11 PM</small></p>
+                <p class="card-text">Lorem ipsum dolor, sondae voluptatem perspiciatis.</p>
+                <a asp-controller="home" asp-action="viewpost" class="btn btn-primary">
+                    <i class="las la-angle-double-right"></i>Read
+                    More
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</main>
