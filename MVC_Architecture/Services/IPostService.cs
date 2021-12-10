@@ -13,7 +13,8 @@ namespace MVC_Architecture.Services
         Post GetById(Guid id);
         Post AddPost(Post newPost);
         Post Update(Post post);
-        void DeletePost(Post post);
-        string SaveImage(IFormFile file);
-   }
+        void DeletePost(Guid id);
+        string SaveImage(IFormFile newFile);
+        
+    }
 }

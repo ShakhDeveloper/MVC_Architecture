@@ -40,20 +40,17 @@ namespace MVC_Architecture
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name:"default",
-                    pattern: "{controller=home}/{action=index}/{id?}"
-                    );
-              
+                    name: "default",
+                    pattern: "{controller=Blog}/{action=Index}/{Id?}"
+                );
             });
         }
     }

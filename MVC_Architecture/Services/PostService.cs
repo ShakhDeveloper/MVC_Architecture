@@ -11,24 +11,38 @@ namespace MVC_Architecture.Services
 {
     public class PostService : IPostService
     {
-
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _dbContext;
-
-        public PostService(ApplicationDbContext dbContext)
+        public PostService(IWebHostEnvironment webHostEnvironment, ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
         public Post AddPost(Post newPost)
         {
+            newPost.Id = Guid.NewGuid();
+            newPost.CreatedTime = DateTime.Now;
             _dbContext.Add(newPost);
             _dbContext.SaveChanges();
 
             return newPost;
         }
 
-        public void DeletePost(Post post)
+        public void DeletePost(Guid id)
         {
-            _dbContext.posts.Remove(post);
+            Post posts = _dbContext.posts.FirstOrDefault(p => p.Id == id);
+            if (posts.ImageFileName is not null)
+            {
+                string uplodFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+                string filePath = Path.Combine(uplodFolder, posts.ImageFileName);
+                FileInfo fileInfo = new FileInfo(filePath);
+                if (fileInfo.Exists)
+                {
+                    fileInfo.Delete();
+                }
+            }
+
+            _dbContext.posts.Remove(posts);
             _dbContext.SaveChanges();
         }
 
@@ -42,18 +56,19 @@ namespace MVC_Architecture.Services
             return _dbContext.posts.FirstOrDefault(post => post.Id == id);
         }
 
-        public string SaveImage(IFormFile file)
+        public string SaveImage(IFormFile newFile)
         {
-            string uniqueName = String.Empty;
-            if (file.FileName != " ")
+            string uniqueName = string.Empty;
+            if (newFile.FileName != null)
             {
-                string uploadFile = Path.Combine("Images");
-                uniqueName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                string filePath = Path.Combine(uploadFile, uniqueName);
+                string uplodFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+                uniqueName = Guid.NewGuid().ToString() + "_" + newFile.FileName;
+                string filePath = Path.Combine(uplodFolder, uniqueName);
                 FileStream fileStream = new FileStream(filePath, FileMode.Create);
-                file.CopyTo(fileStream);
+                newFile.CopyTo(fileStream);
                 fileStream.Close();
             }
+
             return uniqueName;
         }
 
@@ -62,7 +77,7 @@ namespace MVC_Architecture.Services
             _dbContext.posts.Update(post);
             _dbContext.SaveChanges();
 
-            return (post);
+            return post;
         }
     }
 }
